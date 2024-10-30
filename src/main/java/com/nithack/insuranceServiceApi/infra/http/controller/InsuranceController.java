@@ -51,20 +51,4 @@ public class InsuranceController implements InsuranceControllerAPIDoc {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/simulate")
-    public ResponseEntity<ClientInsuranceDTO> simulateInsurance(
-            @Valid @RequestBody RequestClientInsuranceDTO request
-    ) {
-
-        ClientInsuranceEntity simulation = insuranceService.simulateInsurance(request);
-        return ResponseEntity.ok(ClientInsuranceMapper.toDTO(simulation));
-    }
-
-    @PostMapping("/purchase")
-    public ResponseEntity<ClientInsuranceDTO> purchaseInsurance(
-            @RequestBody
-            @Valid RequestClientInsuranceDTO request) {
-        ClientInsuranceEntity contract = insuranceService.purchaseInsurance(request);
-        return ResponseEntity.ok(ClientInsuranceMapper.toDTO(contract));
-    }
 }

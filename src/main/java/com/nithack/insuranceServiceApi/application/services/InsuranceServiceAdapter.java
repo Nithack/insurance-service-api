@@ -1,6 +1,6 @@
 package com.nithack.insuranceServiceApi.application.services;
 
-import com.nithack.insuranceServiceApi.infra.database.service.InsuranceDataServicePort;
+import com.nithack.insuranceServiceApi.application.port.InsuranceDataServicePort;
 import com.nithack.insuranceServiceApi.application.port.InsuranceServicePort;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 import lombok.RequiredArgsConstructor;
