@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface ClientInsuranceRepository extends JpaRepository<ClientInsuranceModel, UUID> {
     Optional<ClientInsuranceModel> findByClientId(UUID clientId);
     boolean existsByClientId(UUID clientId);
+    void deleteByIdAndClientId(UUID clientInsuranceId, UUID clientId);
 }

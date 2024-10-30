@@ -28,4 +28,15 @@ public interface ClientInsuranceControllerAPIDoc {
     @ApiResponse(responseCode = "404", description = "Cliente ou seguro não encontrado")
     @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     ResponseEntity<ClientInsuranceDTO> purchaseInsurance(RequestClientInsuranceDTO request);
+
+    @Operation(summary = "Exclui o seguro de um cliente")
+    @ApiResponse(responseCode = "204", description = "Seguro excluído com sucesso")
+    @ApiResponse(responseCode = "404", description = "Cliente ou seguro não encontrado")
+    ResponseEntity<Void> deleteClientInsurance(UUID clientId, UUID clientInsuranceId);
+
+    @Operation(summary = "Obtém o seguro de um cliente pelo clientId")
+    @ApiResponse(responseCode = "200", description = "Seguro do cliente encontrado",
+            content = @Content(schema = @Schema(implementation = ClientInsuranceDTO.class)))
+    @ApiResponse(responseCode = "404", description = "Cliente ou seguro não encontrado")
+    ResponseEntity<ClientInsuranceDTO> getClientInsurance(UUID clientId);
 }

@@ -1,6 +1,7 @@
 package com.nithack.insuranceServiceApi.application.port;
 
 import com.nithack.insuranceServiceApi.domain.entity.ClientInsuranceEntity;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -42,4 +43,18 @@ public interface ClientInsuranceDataServicePort {
      */
     Optional<ClientInsuranceEntity> findByClientId(UUID clientId);
 
+    /**
+     * Deleta o seguro de um cliente com base no ID do cliente e do ID do seguro.
+     * @param clientInsuranceId ID do seguro
+     * @param clientId ID do cliente
+     */
+    void deleteByIdAndClientId(UUID clientInsuranceId, UUID clientId);
+
+    /**
+     * Verifica se o cliente ja possui um seguro.
+     *
+     * @param clientId o UUID do cliente.
+     * @return true se o seguro de cliente existir, false caso contrário.
+     */
+    boolean existsByClientId(UUID clientId);
 }
