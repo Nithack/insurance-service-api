@@ -1,5 +1,6 @@
 package com.nithack.insuranceServiceApi.application.dto;
 
+import com.nithack.insuranceServiceApi.domain.enums.InsuranceStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class ClientInsuranceDTO {
     private UUID id;
     private UUID clientId;
     private UUID insuranceId;
+    private String cpf;
     private String name;
     private double totalCost;
     private double monthlyCost;
@@ -24,5 +26,5 @@ public class ClientInsuranceDTO {
     private List<String> benefits;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;
+    private InsuranceStatus status;
 }

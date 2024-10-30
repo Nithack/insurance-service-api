@@ -16,10 +16,10 @@ import java.util.List;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI clientServiceOpenAPI() {
+    public OpenAPI insuranceServiceOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("Client Service API")
-                        .description("API para gerenciamento de clientes, incluindo operações de criação, leitura, atualização e exclusão.")
+                .info(new Info().title("Insurance Service API")
+                        .description("API para gerenciamento de seguros, incluindo operações de criação, listagem, simulação e contratação.")
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Suporte Nithack")
@@ -33,10 +33,12 @@ public class OpenApiConfig {
                         new Server().url("https://api.nithack.com").description("Ambiente de Produção")
                 ))
                 .tags(List.of(
-                        new Tag().name("Client Management").description("Operações para gerenciamento de clientes")
+                        new Tag().name("Insurance Management").description("Operações para gerenciamento de seguros"),
+                        new Tag().name("Simulation").description("Operações para simulação de planos de seguros"),
+                        new Tag().name("Purchase").description("Operações de contratação de seguros")
                 ))
                 .externalDocs(new ExternalDocumentation()
-                        .description("Documentação Completa")
-                        .url("https://nithack.com/docs"));
+                        .description("Documentação Completa do Insurance Service")
+                        .url("https://nithack.com/docs/insurance"));
     }
 }

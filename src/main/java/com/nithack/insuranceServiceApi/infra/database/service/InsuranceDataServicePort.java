@@ -1,4 +1,4 @@
-package com.nithack.insuranceServiceApi.application.port;
+package com.nithack.insuranceServiceApi.infra.database.service;
 
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 

@@ -1,129 +1,75 @@
 package com.nithack.insuranceServiceApi.application.services;
 
-
-import com.nithack.clientService.application.exception.ClientAlreadyExistsException;
-import com.nithack.clientService.application.exception.ClientNotFoundException;
-import com.nithack.clientService.application.port.ClientDataServicePort;
-import com.nithack.clientService.application.port.ClientServicePort;
-import com.nithack.clientService.domain.entity.ClientEntity;
-import com.nithack.insuranceServiceApi.application.port.InsuranceDataServicePort;
+import com.nithack.insuranceServiceApi.infra.database.service.InsuranceDataServicePort;
+import com.nithack.insuranceServiceApi.application.port.InsuranceServicePort;
+import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Adapter para operações de gerenciamento de seguros,
+ * implementando lógica de validação e acesso ao banco de dados.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class InsuranceServiceAdapter implements ClientServicePort {
+public class InsuranceServiceAdapter implements InsuranceServicePort {
 
-    private final InsuranceDataServicePort insuranceDataServicePort;
+    private final InsuranceDataServicePort insuranceDataService;
 
     @Override
-    public void delete(UUID clientId) {
-        log.info("[delete] Deleting client with id: {}", clientId);
+    public InsuranceEntity createInsurance(InsuranceEntity insuranceEntity) {
+        log.info("[createInsurance] Iniciando criação de seguro: {}", insuranceEntity.getName());
         try {
-            if (!insuranceDataServicePort.existsById(clientId)) {
-                log.warn("[delete] Client with id: {} does not exist", clientId);
-                throw new ClientNotFoundException(clientId);
-            }
-            insuranceDataServicePort.deleteById(clientId);
-            log.info("[delete] Successfully deleted client with id: {}", clientId);
+            InsuranceEntity createdInsurance = insuranceDataService.save(insuranceEntity);
+            log.info("[createInsurance] Seguro criado com sucesso: {}", createdInsurance.getId());
+            return createdInsurance;
         } catch (Exception e) {
-            log.error("[delete] Error deleting client with id: {}", clientId, e);
+            log.error("[createInsurance] Erro ao criar seguro: {}", insuranceEntity.getName(), e);
             throw e;
         } finally {
-            log.info("[delete] Finished deleted client with id: {}", clientId);
+            log.info("[createInsurance] Concluída criação de seguro: {}", insuranceEntity.getName());
         }
     }
 
     @Override
-    public List<ClientEntity> findAll() {
-       log.info("[findAll] Finding all clients");
-       try {
-           List<ClientEntity> clients = insuranceDataServicePort.findAll();
-           if (clients.isEmpty()) {
-               log.warn("[findAll] No clients found");
-               return List.of();
-           }
-           log.info("[findAll] Successfully found all clients");
-           return clients;
-       } catch (Exception e) {
-           log.error("[findAll] Error finding all clients");
-           throw e;
-       } finally {
-           log.info("[findAll] Finished finding all clients");
-       }
-    }
-
-    @Override
-    public Optional<ClientEntity> findById(String id) {
-        log.info("[findById] Finding client with id: {}", id);
+    public List<InsuranceEntity> getAllInsurances() {
+        log.info("[getAllInsurances] Buscando todos os seguros disponíveis.");
         try {
-            Optional<ClientEntity> client = insuranceDataServicePort.findById(UUID.fromString(id));
-            if (client.isEmpty()) {
-                log.warn("[findById] Client with id: {} does not exist", id);
-                return Optional.empty();
+            List<InsuranceEntity> insurances = insuranceDataService.findAll();
+            if (insurances.isEmpty()) {
+                log.warn("[getAllInsurances] Nenhum seguro encontrado.");
+                return List.of();
             }
-            log.info("[findById] Successfully found client with id: {}", id);
-            return client;
+            log.info("[getAllInsurances] {} seguros encontrados.", insurances.size());
+            return insurances;
         } catch (Exception e) {
-            log.error("[findById] Error finding client with id: {}", id);
+            log.error("[getAllInsurances] Erro ao buscar todos os seguros.", e);
             throw e;
         } finally {
-            log.info("[findById] Finished finding client with id: {}", id);
+            log.info("[getAllInsurances] Concluída busca de todos os seguros.");
         }
     }
 
     @Override
-    public ClientEntity update(ClientEntity client) {
-        log.info("[update] Updating client with id: {}", client.getId());
+    public void deleteInsurance(UUID insuranceId) {
+        log.info("[deleteInsurance] Iniciando exclusão de seguro com ID: {}", insuranceId);
         try {
-            var optionalClient = insuranceDataServicePort.findById(client.getId());
-            if (optionalClient.isEmpty()) {
-                log.warn("[update] Client with id: {} does not exist stop update", client.getId());
-                throw new ClientNotFoundException(client.getId());
+            if (!insuranceDataService.existsById(insuranceId)) {
+                log.warn("[deleteInsurance] Seguro com ID {} não encontrado.", insuranceId);
+                throw new IllegalArgumentException("Seguro não encontrado para o ID: " + insuranceId);
             }
-            optionalClient.ifPresent(
-                    c -> {
-                        client.setUpdatedAt(LocalDate.now());
-                        client.setCreatedAt(c.getCreatedAt());
-                    }
-            );
-            final ClientEntity updateClientResult = insuranceDataServicePort.save(client);
-            log.info("[update] Successfully updated client with id: {}", client.getId());
-            return updateClientResult;
+            insuranceDataService.deleteById(insuranceId);
+            log.info("[deleteInsurance] Seguro com ID {} excluído com sucesso.", insuranceId);
         } catch (Exception e) {
-            log.error("[update] Error updating client with id: {}", client.getId());
+            log.error("[deleteInsurance] Erro ao excluir seguro com ID: {}", insuranceId, e);
             throw e;
         } finally {
-            log.info("[update] Finished updating client with id: {}", client.getId());
+            log.info("[deleteInsurance] Concluída exclusão de seguro com ID: {}", insuranceId);
         }
-    }
-
-    @Override
-    public ClientEntity create(ClientEntity client) {
-        client.setId(UUID.randomUUID());
-       log.info("[create] Start create new client with id: {}", client.getId());
-       try {
-           if (insuranceDataServicePort.existsByCpf(client.getCpf())) {
-               log.warn("[create] Client with cpf already exists");
-               throw new ClientAlreadyExistsException(client.getCpf());
-           }
-           client.setCreatedAt(LocalDate.now());
-           client.setUpdatedAt(LocalDate.now());
-           final ClientEntity clientEntity = insuranceDataServicePort.save(client);
-           log.info("[create] Successfully created new client with id: {}", client.getId());
-           return clientEntity;
-       } catch (Exception e) {
-           log.error("[create] Error creating new client with id: {}", client.getId());
-           throw e;
-       } finally {
-           log.info("[create] Finished create new client with id: {}", client.getId());
-       }
     }
 }

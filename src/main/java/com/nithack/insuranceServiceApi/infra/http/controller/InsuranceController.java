@@ -3,7 +3,11 @@ package com.nithack.insuranceServiceApi.infra.http.controller;
 import com.nithack.insuranceServiceApi.application.dto.InsuranceDTO;
 import com.nithack.insuranceServiceApi.application.dto.RequestClientInsuranceDTO;
 import com.nithack.insuranceServiceApi.application.dto.ClientInsuranceDTO;
+import com.nithack.insuranceServiceApi.application.mapper.ClientInsuranceMapper;
+import com.nithack.insuranceServiceApi.application.mapper.InsuranceMapper;
+import com.nithack.insuranceServiceApi.infra.http.doc.InsuranceControllerAPIDoc;
 import com.nithack.insuranceServiceApi.application.port.InsuranceServicePort;
+import com.nithack.insuranceServiceApi.domain.entity.ClientInsuranceEntity;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +27,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/insurance")
 @RequiredArgsConstructor
-public class InsuranceController {
+public class InsuranceController implements InsuranceControllerAPIDoc {
 
     private final InsuranceServicePort insuranceService;
 
@@ -31,14 +35,14 @@ public class InsuranceController {
     public ResponseEntity<InsuranceDTO> createInsurance(
             @RequestBody
             @Valid InsuranceDTO insuranceDTO) {
-        InsuranceEntity insurance = insuranceService.createInsurance(insuranceDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(insurance);
+        InsuranceEntity insurance = insuranceService.createInsurance(InsuranceMapper.toEntity(insuranceDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(InsuranceMapper.toDTO(insurance));
     }
 
     @GetMapping
     public ResponseEntity<List<InsuranceDTO>> getAllInsurances() {
-        List<InsuranceDTO> insurances = insuranceService.getAllInsurances();
-        return ResponseEntity.ok(insurances);
+        List<InsuranceEntity> insurances = insuranceService.getAllInsurances();
+        return ResponseEntity.ok(insurances.stream().map(InsuranceMapper::toDTO).toList());
     }
 
     @DeleteMapping("/{insuranceId}")
@@ -49,17 +53,18 @@ public class InsuranceController {
 
     @PostMapping("/simulate")
     public ResponseEntity<ClientInsuranceDTO> simulateInsurance(
-            @Valid @RequestBody InsuranceRequestDTO request
+            @Valid @RequestBody RequestClientInsuranceDTO request
     ) {
-        ClientInsuranceDTO simulation = insuranceService.simulateInsurance(request);
-        return ResponseEntity.ok(simulation);
+
+        ClientInsuranceEntity simulation = insuranceService.simulateInsurance(request);
+        return ResponseEntity.ok(ClientInsuranceMapper.toDTO(simulation));
     }
 
     @PostMapping("/purchase")
     public ResponseEntity<ClientInsuranceDTO> purchaseInsurance(
-                                                        @RequestBody
-                                                        @Valid RequestClientInsuranceDTO request) {
-        ClientInsuranceDTO contract = insuranceService.purchaseInsurance(request);
-        return ResponseEntity.ok(contract);
+            @RequestBody
+            @Valid RequestClientInsuranceDTO request) {
+        ClientInsuranceEntity contract = insuranceService.purchaseInsurance(request);
+        return ResponseEntity.ok(ClientInsuranceMapper.toDTO(contract));
     }
 }

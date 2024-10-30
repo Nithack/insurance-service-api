@@ -1,56 +1,36 @@
 package com.nithack.insuranceServiceApi.application.port;
 
-import com.nithack.clientService.application.exception.ClientAlreadyExistsException;
-import com.nithack.clientService.application.exception.ClientNotFoundException;
-import com.nithack.clientService.domain.entity.ClientEntity;
+import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
 /**
- * Interface para operações de gerenciamento de clientes, como criação, atualização, consulta e exclusão.
+ * Interface que define o contrato para o serviço de gerenciamento de seguros.
+ * Fornece operações para criar, listar, deletar, seguros
  */
 public interface InsuranceServicePort {
 
     /**
-     * Exclui um cliente pelo ID.
+     * Cria um novo seguro com base nas informações fornecidas no DTO.
      *
-     * @param clientId UUID do cliente.
-     * @throws ClientNotFoundException se o cliente não existir.
+     * @param insuranceDTO Dados do seguro a ser criado.
+     * @return A entidade de seguro criada.
      */
-    void delete(UUID clientId);
+    InsuranceEntity createInsurance(InsuranceEntity insuranceDTO);
 
     /**
-     * Retorna todos os clientes cadastrados.
+     * Lista todos os seguros disponíveis no sistema.
      *
-     * @return lista de clientes ou lista vazia, se nenhum cliente for encontrado.
+     * @return Uma lista de objetos InsuranceDTO representando todos os seguros disponíveis.
      */
-    List<ClientEntity> findAll();
+    List<InsuranceEntity> getAllInsurances();
 
     /**
-     * Busca um cliente pelo ID.
+     * Deleta um seguro específico identificado pelo seu ID.
      *
-     * @param id UUID do cliente como string.
-     * @return Optional com o cliente, ou vazio se não encontrado.
+     * @param insuranceId ID do seguro a ser excluído.
      */
-    Optional<ClientEntity> findById(String id);
+    void deleteInsurance(UUID insuranceId);
 
-    /**
-     * Atualiza um cliente existente.
-     *
-     * @param client dados atualizados do cliente.
-     * @return ClientEntity com o cliente atualizado.
-     * @throws ClientNotFoundException se o cliente não existir.
-     */
-    ClientEntity update(ClientEntity client);
-
-    /**
-     * Cria um novo cliente.
-     *
-     * @param clientDto dados do novo cliente.
-     * @return ClientEntity com o cliente criado.
-     * @throws ClientAlreadyExistsException se um cliente com o mesmo CPF já existir.
-     */
-    ClientEntity create(ClientEntity clientDto);
 }
-

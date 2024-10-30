@@ -4,6 +4,7 @@ package com.nithack.insuranceServiceApi.application.mapper;
 import com.nithack.insuranceServiceApi.application.dto.ClientInsuranceDTO;
 import com.nithack.insuranceServiceApi.domain.entity.ClientInsuranceEntity;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
+import com.nithack.insuranceServiceApi.domain.enums.InsuranceStatus;
 import com.nithack.insuranceServiceApi.infra.database.model.ClientInsuranceModel;
 
 public class ClientInsuranceMapper {
@@ -21,9 +22,10 @@ public class ClientInsuranceMapper {
                 .insurance(InsuranceMapper.toModel(clientInsurance.getInsurance()))
                 .startDate(clientInsurance.getStartDate())
                 .endDate(clientInsurance.getEndDate())
-                .status(clientInsurance.getStatus())
+                .status(clientInsurance.getStatus().name())
                 .monthlyCost(clientInsurance.getMonthlyCost())
                 .durationMonths(clientInsurance.getDurationMonths())
+                .cpf(clientInsurance.getCpf())
                 .build();
     }
 
@@ -40,9 +42,10 @@ public class ClientInsuranceMapper {
                 .insurance(InsuranceMapper.toEntity(clientInsuranceModel.getInsurance()))
                 .startDate(clientInsuranceModel.getStartDate())
                 .endDate(clientInsuranceModel.getEndDate())
-                .status(clientInsuranceModel.getStatus())
+                .status(InsuranceStatus.valueOf(clientInsuranceModel.getStatus()))
                 .monthlyCost(clientInsuranceModel.getMonthlyCost())
                 .durationMonths(clientInsuranceModel.getDurationMonths())
+                .cpf(clientInsuranceModel.getCpf())
                 .build();
     }
 
