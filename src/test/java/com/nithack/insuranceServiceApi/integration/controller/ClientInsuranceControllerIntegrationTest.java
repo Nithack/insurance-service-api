@@ -69,7 +69,7 @@ class ClientInsuranceControllerIntegrationTest {
         stubFor(get(urlPathMatching("/clients/" + clientId))
                 .willReturn(okJson(objectMapper.writeValueAsString(createClientDTO(clientId)))));
 
-        var insuranceModel = getInsuranceModel(insuranceId, "Test Plan", 100000.0, 250.0);
+        var insuranceModel = getInsuranceModel(insuranceId, "New Plan", 200000.0, 450.0);
         insuranceRepository.save(insuranceModel);
 
         RequestClientInsuranceDTO request = createRequestClientInsuranceDTO(clientId, insuranceId);
