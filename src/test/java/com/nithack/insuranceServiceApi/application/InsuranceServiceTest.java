@@ -2,11 +2,11 @@ package com.nithack.insuranceServiceApi.application;
 
 
 import com.nithack.insuranceServiceApi.application.exception.InsuranceNotFoundException;
-import com.nithack.insuranceServiceApi.application.services.InsuranceDataServiceAdapter;
 import com.nithack.insuranceServiceApi.application.services.InsuranceServiceAdapter;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 import com.nithack.insuranceServiceApi.infra.database.model.InsuranceModel;
 import com.nithack.insuranceServiceApi.infra.database.repository.InsuranceRepository;
+import com.nithack.insuranceServiceApi.infra.database.service.InsuranceDataServiceAdapter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
