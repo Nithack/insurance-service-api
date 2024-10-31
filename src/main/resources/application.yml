@@ -32,4 +32,4 @@ logging:
   level:
     root: INFO
 server:
-  port: ${APP_PORT}
+  port: ${INSURANCE_PORT:3031}
