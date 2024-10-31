@@ -54,16 +54,6 @@ class ClientInsuranceControllerIntegrationTest {
     @Autowired
     private InsuranceRepository insuranceRepository;
 
-    private static InsuranceModel getInsuranceModel(UUID id, String name, double coverageAmount, double monthlyCost) {
-        return InsuranceModel.builder()
-                .id(id)
-                .name(name)
-                .coverageAmount(coverageAmount)
-                .monthlyCost(monthlyCost)
-                .benefits(List.of("Benefit A", "Benefit B"))
-                .build();
-    }
-
     @BeforeEach
     void setUp() {
         clientInsuranceRepository.deleteAll();
@@ -186,6 +176,16 @@ class ClientInsuranceControllerIntegrationTest {
                 .startDate(LocalDate.now())
                 .endDate(LocalDate.now().plusMonths(12))
                 .status(InsuranceStatus.ACTIVE.name())
+                .build();
+    }
+
+    private static InsuranceModel getInsuranceModel(UUID id, String name, double coverageAmount, double monthlyCost) {
+        return InsuranceModel.builder()
+                .id(id)
+                .name(name)
+                .coverageAmount(coverageAmount)
+                .monthlyCost(monthlyCost)
+                .benefits(List.of("Benefit A", "Benefit B"))
                 .build();
     }
 }
