@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: insurance-service-api
@@ -15,6 +16,9 @@ feign:
   max-attempts: 3
   max-period-between-attempts: 3
   period: 100
+client:
+  service:
+    url: ${CLIENT_SERVICE_URL}
 # swagger
 springdoc:
   swagger-ui:
@@ -28,3 +32,5 @@ springdoc:
 logging:
   level:
     root: INFO
+server:
+  port: ${APP_PORT}

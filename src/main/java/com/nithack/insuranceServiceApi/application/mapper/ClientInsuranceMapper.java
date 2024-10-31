@@ -59,6 +59,9 @@ public class ClientInsuranceMapper {
         final InsuranceEntity insurance = clientInsurance.getInsurance();
         return ClientInsuranceDTO.builder()
                 .id(clientInsurance.getId())
+                .name(insurance.getName())
+                .cpf(clientInsurance.getCpf())
+                .benefits(insurance.getBenefits())
                 .clientId(clientInsurance.getClientId())
                 .insuranceId(insurance.getId())
                 .startDate(clientInsurance.getStartDate())

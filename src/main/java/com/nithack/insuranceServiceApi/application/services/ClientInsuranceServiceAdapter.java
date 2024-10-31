@@ -79,9 +79,12 @@ public class ClientInsuranceServiceAdapter implements ClientInsuranceServicePort
         log.info("[purchaseInsurance] Initiating insurance purchase for clientId: {}, insuranceId: {}",
                 request.getClientId(), request.getInsuranceId());
         try {
-
+            final boolean hasClientInsurance = clientInsuranceDataService.existsByClientId(request.getClientId());
+            if (hasClientInsurance) {
+                throw new ClientInsuranceAlreadyExistsException(request.getClientId());
+            }
             ClientInsuranceEntity contract = getClientInsurance(request, InsuranceStatus.ACTIVE);
-
+            contract.setId(UUID.randomUUID());
             ClientInsuranceEntity savedContract = clientInsuranceDataService.create(contract);
             log.info("[purchaseInsurance] Successfully purchased insurance for clientId: {}, insuranceId: {}",
                     request.getClientId(), request.getInsuranceId());
@@ -116,7 +119,7 @@ public class ClientInsuranceServiceAdapter implements ClientInsuranceServicePort
     }
 
     @Override
-    public Optional<ClientInsuranceEntity> getClientInsuranceByClientId(UUID clientId) {
+    public Optional<ClientInsuranceEntity> getByClientId(UUID clientId) {
         log.info("[getClientInsuranceByClientId] Retrieving insurance for clientId: {}", clientId);
         try {
             Optional<ClientInsuranceEntity> clientInsurance = clientInsuranceDataService.findByClientId(clientId);

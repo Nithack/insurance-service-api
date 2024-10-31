@@ -8,6 +8,7 @@ import com.nithack.insuranceServiceApi.infra.database.repository.ClientInsurance
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -82,6 +83,7 @@ public class ClientInsuranceDataServiceAdapter implements ClientInsuranceDataSer
     }
 
     @Override
+    @Transactional
     public void deleteByIdAndClientId(UUID clientInsuranceId, UUID clientId) {
         log.debug("[deleteByIdAndClientId] Deleting client insurance with clientId: {}, clientInsuranceId: {}",
                 clientId, clientInsuranceId);

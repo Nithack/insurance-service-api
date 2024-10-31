@@ -1,13 +1,9 @@
 package com.nithack.insuranceServiceApi.infra.http.controller;
 
 import com.nithack.insuranceServiceApi.application.dto.InsuranceDTO;
-import com.nithack.insuranceServiceApi.application.dto.RequestClientInsuranceDTO;
-import com.nithack.insuranceServiceApi.application.dto.ClientInsuranceDTO;
-import com.nithack.insuranceServiceApi.application.mapper.ClientInsuranceMapper;
 import com.nithack.insuranceServiceApi.application.mapper.InsuranceMapper;
 import com.nithack.insuranceServiceApi.infra.http.doc.InsuranceControllerAPIDoc;
 import com.nithack.insuranceServiceApi.application.port.InsuranceServicePort;
-import com.nithack.insuranceServiceApi.domain.entity.ClientInsuranceEntity;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

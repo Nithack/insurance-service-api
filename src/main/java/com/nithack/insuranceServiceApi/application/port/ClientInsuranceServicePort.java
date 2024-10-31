@@ -43,5 +43,5 @@ public interface ClientInsuranceServicePort {
      * @param clientId ID do cliente.
      * @return Um Optional contendo a entidade de seguro do cliente, se existir.
      */
-    Optional<ClientInsuranceEntity> getClientInsuranceByClientId(UUID clientId);
+    Optional<ClientInsuranceEntity> getByClientId(UUID clientId);
 }

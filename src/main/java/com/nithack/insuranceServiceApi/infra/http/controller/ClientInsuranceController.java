@@ -9,6 +9,7 @@ import com.nithack.insuranceServiceApi.infra.http.doc.ClientInsuranceControllerA
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -41,7 +43,7 @@ public class ClientInsuranceController implements ClientInsuranceControllerAPIDo
             @Valid @RequestBody RequestClientInsuranceDTO request) {
         log.info("[purchaseInsurance] Purchasing insurance for client with ID: {}", request.getClientId());
         ClientInsuranceEntity contract = clientInsuranceService.purchaseInsurance(request);
-        return ResponseEntity.ok(ClientInsuranceMapper.toDTO(contract));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ClientInsuranceMapper.toDTO(contract));
     }
 
     @DeleteMapping("/{clientId}/{clientInsuranceId}")
@@ -56,7 +58,8 @@ public class ClientInsuranceController implements ClientInsuranceControllerAPIDo
     @GetMapping("/{clientId}")
     public ResponseEntity<ClientInsuranceDTO> getClientInsurance(@PathVariable UUID clientId) {
         log.info("[getClientInsurance] Retrieving insurance for client with ID: {}", clientId);
-        ClientInsuranceEntity clientInsurance = clientInsuranceService.getClientInsuranceByClientId(clientId);
-        return ResponseEntity.ok(ClientInsuranceMapper.toDTO(clientInsurance));
+        Optional<ClientInsuranceEntity> clientInsurance = clientInsuranceService.getByClientId(clientId);
+        return clientInsurance.map( clientInsuranceEntity -> ResponseEntity.ok(ClientInsuranceMapper.toDTO(clientInsuranceEntity)))
+                .orElse(ResponseEntity.noContent().build());
     }
 }

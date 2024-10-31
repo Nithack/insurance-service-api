@@ -1,5 +1,6 @@
 package com.nithack.insuranceServiceApi.application.services;
 
+import com.nithack.insuranceServiceApi.application.exception.InsuranceNotFoundException;
 import com.nithack.insuranceServiceApi.application.port.InsuranceDataServicePort;
 import com.nithack.insuranceServiceApi.application.port.InsuranceServicePort;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
@@ -11,8 +12,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Adapter para operações de gerenciamento de seguros,
- * implementando lógica de validação e acesso ao banco de dados.
+ * Adapter for insurance management operations,
+ * implementing validation logic and database access.
  */
 @Slf4j
 @Service
@@ -23,53 +24,55 @@ public class InsuranceServiceAdapter implements InsuranceServicePort {
 
     @Override
     public InsuranceEntity createInsurance(InsuranceEntity insuranceEntity) {
-        log.info("[createInsurance] Iniciando criação de seguro: {}", insuranceEntity.getName());
+        log.info("[createInsurance] Starting insurance creation: {}", insuranceEntity.getName());
         try {
+            final UUID insuranceId = UUID.randomUUID();
+            insuranceEntity.setId(insuranceId);
             InsuranceEntity createdInsurance = insuranceDataService.save(insuranceEntity);
-            log.info("[createInsurance] Seguro criado com sucesso: {}", createdInsurance.getId());
+            log.info("[createInsurance] Insurance created successfully: {}", createdInsurance.getId());
             return createdInsurance;
         } catch (Exception e) {
-            log.error("[createInsurance] Erro ao criar seguro: {}", insuranceEntity.getName(), e);
+            log.error("[createInsurance] Error creating insurance: {}", insuranceEntity.getName(), e);
             throw e;
         } finally {
-            log.info("[createInsurance] Concluída criação de seguro: {}", insuranceEntity.getName());
+            log.info("[createInsurance] Completed insurance creation: {}", insuranceEntity.getName());
         }
     }
 
     @Override
     public List<InsuranceEntity> getAllInsurances() {
-        log.info("[getAllInsurances] Buscando todos os seguros disponíveis.");
+        log.info("[getAllInsurances] Fetching all available insurances.");
         try {
             List<InsuranceEntity> insurances = insuranceDataService.findAll();
             if (insurances.isEmpty()) {
-                log.warn("[getAllInsurances] Nenhum seguro encontrado.");
+                log.warn("[getAllInsurances] No insurances found.");
                 return List.of();
             }
-            log.info("[getAllInsurances] {} seguros encontrados.", insurances.size());
+            log.info("[getAllInsurances] Found {} insurances.", insurances.size());
             return insurances;
         } catch (Exception e) {
-            log.error("[getAllInsurances] Erro ao buscar todos os seguros.", e);
+            log.error("[getAllInsurances] Error fetching all insurances.", e);
             throw e;
         } finally {
-            log.info("[getAllInsurances] Concluída busca de todos os seguros.");
+            log.info("[getAllInsurances] Completed fetching all insurances.");
         }
     }
 
     @Override
     public void deleteInsurance(UUID insuranceId) {
-        log.info("[deleteInsurance] Iniciando exclusão de seguro com ID: {}", insuranceId);
+        log.info("[deleteInsurance] Starting deletion of insurance with ID: {}", insuranceId);
         try {
             if (!insuranceDataService.existsById(insuranceId)) {
-                log.warn("[deleteInsurance] Seguro com ID {} não encontrado.", insuranceId);
-                throw new IllegalArgumentException("Seguro não encontrado para o ID: " + insuranceId);
+                log.warn("[deleteInsurance] Insurance with ID {} not found.", insuranceId);
+                throw new InsuranceNotFoundException(insuranceId);
             }
             insuranceDataService.deleteById(insuranceId);
-            log.info("[deleteInsurance] Seguro com ID {} excluído com sucesso.", insuranceId);
+            log.info("[deleteInsurance] Insurance with ID {} deleted successfully.", insuranceId);
         } catch (Exception e) {
-            log.error("[deleteInsurance] Erro ao excluir seguro com ID: {}", insuranceId, e);
+            log.error("[deleteInsurance] Error deleting insurance with ID: {}", insuranceId, e);
             throw e;
         } finally {
-            log.info("[deleteInsurance] Concluída exclusão de seguro com ID: {}", insuranceId);
+            log.info("[deleteInsurance] Completed deletion of insurance with ID: {}", insuranceId);
         }
     }
 }
