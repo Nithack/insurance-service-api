@@ -1,10 +1,10 @@
-package com.nithack.insuranceServiceApi.application.services;
+package com.nithack.insuranceServiceApi.infra.database.service;
 
 import com.nithack.insuranceServiceApi.application.mapper.InsuranceMapper;
+import com.nithack.insuranceServiceApi.application.port.InsuranceDataServicePort;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;
 import com.nithack.insuranceServiceApi.infra.database.model.InsuranceModel;
 import com.nithack.insuranceServiceApi.infra.database.repository.InsuranceRepository;
-import com.nithack.insuranceServiceApi.application.port.InsuranceDataServicePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

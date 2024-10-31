@@ -59,7 +59,7 @@ public class ClientInsuranceController implements ClientInsuranceControllerAPIDo
     public ResponseEntity<ClientInsuranceDTO> getClientInsurance(@PathVariable UUID clientId) {
         log.info("[getClientInsurance] Retrieving insurance for client with ID: {}", clientId);
         Optional<ClientInsuranceEntity> clientInsurance = clientInsuranceService.getByClientId(clientId);
-        return clientInsurance.map( clientInsuranceEntity -> ResponseEntity.ok(ClientInsuranceMapper.toDTO(clientInsuranceEntity)))
+        return clientInsurance.map(clientInsuranceEntity -> ResponseEntity.ok(ClientInsuranceMapper.toDTO(clientInsuranceEntity)))
                 .orElse(ResponseEntity.noContent().build());
     }
 }

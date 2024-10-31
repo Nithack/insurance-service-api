@@ -10,8 +10,8 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = "file:.env", ignoreResourceNotFound = true)
 public class InsuranceServiceApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(InsuranceServiceApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(InsuranceServiceApiApplication.class, args);
+    }
 
 }

@@ -32,8 +32,8 @@ public interface ClientInsuranceServicePort {
     /**
      * Exclui o seguro de um cliente específico, identificado pelo ID do cliente e do seguro.
      *
-     * @param clientId           ID do cliente.
-     * @param clientInsuranceId  ID do seguro de cliente.
+     * @param clientId          ID do cliente.
+     * @param clientInsuranceId ID do seguro de cliente.
      */
     void deleteClientInsurance(UUID clientId, UUID clientInsuranceId);
 

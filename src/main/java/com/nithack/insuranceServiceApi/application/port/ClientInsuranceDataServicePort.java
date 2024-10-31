@@ -1,7 +1,6 @@
 package com.nithack.insuranceServiceApi.application.port;
 
 import com.nithack.insuranceServiceApi.domain.entity.ClientInsuranceEntity;
-import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -45,8 +44,9 @@ public interface ClientInsuranceDataServicePort {
 
     /**
      * Deleta o seguro de um cliente com base no ID do cliente e do ID do seguro.
+     *
      * @param clientInsuranceId ID do seguro
-     * @param clientId ID do cliente
+     * @param clientId          ID do cliente
      */
     void deleteByIdAndClientId(UUID clientInsuranceId, UUID clientId);
 

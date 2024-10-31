@@ -4,7 +4,6 @@ import com.nithack.insuranceServiceApi.properties.FeignProperties;
 import feign.Retryer;
 import feign.okhttp.OkHttpClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +16,7 @@ public class FeignClientConfig {
     private final FeignProperties feignProperties;
 
     @Bean
-    public OkHttpClient client()  {
+    public OkHttpClient client() {
         return new OkHttpClient();
     }
 

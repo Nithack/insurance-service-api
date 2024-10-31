@@ -2,7 +2,6 @@ package com.nithack.insuranceServiceApi.application;
 
 
 import com.nithack.insuranceServiceApi.application.exception.InsuranceNotFoundException;
-import com.nithack.insuranceServiceApi.application.port.InsuranceDataServicePort;
 import com.nithack.insuranceServiceApi.application.services.InsuranceDataServiceAdapter;
 import com.nithack.insuranceServiceApi.application.services.InsuranceServiceAdapter;
 import com.nithack.insuranceServiceApi.domain.entity.InsuranceEntity;

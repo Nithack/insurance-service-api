@@ -1,11 +1,6 @@
 package com.nithack.insuranceServiceApi.integration.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.noContent;
-import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 import com.nithack.insuranceServiceApi.application.dto.ClientDTO;
 import com.nithack.insuranceServiceApi.application.dto.RequestClientInsuranceDTO;
 import com.nithack.insuranceServiceApi.application.exception.ClientNotFoundException;

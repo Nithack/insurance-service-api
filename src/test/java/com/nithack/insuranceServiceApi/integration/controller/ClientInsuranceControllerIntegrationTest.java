@@ -1,16 +1,13 @@
 package com.nithack.insuranceServiceApi.integration.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.noContent;
-import static com.github.tomakehurst.wiremock.client.WireMock.notFound;
 import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 import com.nithack.insuranceServiceApi.application.dto.ClientDTO;
 import com.nithack.insuranceServiceApi.application.dto.RequestClientInsuranceDTO;
-import com.nithack.insuranceServiceApi.config.WireMockConfiguration;
 import com.nithack.insuranceServiceApi.domain.enums.InsuranceStatus;
 import com.nithack.insuranceServiceApi.infra.database.model.ClientInsuranceModel;
 import com.nithack.insuranceServiceApi.infra.database.model.InsuranceModel;
@@ -32,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.testcontainers.utility.TestcontainersConfiguration;
 import org.wiremock.spring.ConfigureWireMock;
 import org.wiremock.spring.EnableWireMock;
-
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,6 +53,16 @@ class ClientInsuranceControllerIntegrationTest {
     private ClientInsuranceRepository clientInsuranceRepository;
     @Autowired
     private InsuranceRepository insuranceRepository;
+
+    private static InsuranceModel getInsuranceModel(UUID id, String name, double coverageAmount, double monthlyCost) {
+        return InsuranceModel.builder()
+                .id(id)
+                .name(name)
+                .coverageAmount(coverageAmount)
+                .monthlyCost(monthlyCost)
+                .benefits(List.of("Benefit A", "Benefit B"))
+                .build();
+    }
 
     @BeforeEach
     void setUp() {
@@ -180,16 +186,6 @@ class ClientInsuranceControllerIntegrationTest {
                 .startDate(LocalDate.now())
                 .endDate(LocalDate.now().plusMonths(12))
                 .status(InsuranceStatus.ACTIVE.name())
-                .build();
-    }
-
-    private static InsuranceModel getInsuranceModel(UUID id, String name, double coverageAmount, double monthlyCost) {
-        return InsuranceModel.builder()
-                .id(id)
-                .name(name)
-                .coverageAmount(coverageAmount)
-                .monthlyCost(monthlyCost)
-                .benefits(List.of("Benefit A", "Benefit B"))
                 .build();
     }
 }

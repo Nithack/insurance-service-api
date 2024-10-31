@@ -95,7 +95,7 @@ public class ClientInsuranceDataServiceAdapter implements ClientInsuranceDataSer
             log.error("[deleteByIdAndClientId] Error deleting client insurance with clientId: {}, clientInsuranceId: {}",
                     clientId, clientInsuranceId);
             throw e;
-        }finally {
+        } finally {
             log.debug("[deleteByIdAndClientId] Finished deleting client insurance with clientId: {}, clientInsuranceId: {}",
                     clientId, clientInsuranceId);
         }

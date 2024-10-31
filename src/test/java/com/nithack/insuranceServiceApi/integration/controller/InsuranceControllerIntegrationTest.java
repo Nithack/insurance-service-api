@@ -18,11 +18,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.testcontainers.utility.TestcontainersConfiguration;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +43,16 @@ class InsuranceControllerIntegrationTest {
     private InsuranceRepository insuranceRepository;
     @Autowired
     private ClientInsuranceRepository clientInsuranceRepository;
+
+    static InsuranceModel getInsuranceModel(UUID id, String name, double coverageAmount, double monthlyCost) {
+        return InsuranceModel.builder()
+                .id(id)
+                .name(name)
+                .coverageAmount(coverageAmount)
+                .monthlyCost(monthlyCost)
+                .benefits(List.of("Benefit A", "Benefit B"))
+                .build();
+    }
 
     @BeforeEach
     void setUp() {
@@ -91,7 +102,6 @@ class InsuranceControllerIntegrationTest {
         assertThat(foundInsurance).isEmpty();
     }
 
-
     @Test
     @DisplayName("Should return 404 when insurance is not found for deletion")
     void shouldReturn404WhenInsuranceNotFoundForDeletion() throws Exception {
@@ -120,22 +130,11 @@ class InsuranceControllerIntegrationTest {
                 .andExpect(jsonPath("$.message").value("Invalid request body, please check your inputs."));
     }
 
-
     private InsuranceDTO createInsuranceDTO() {
         return InsuranceDTO.builder()
                 .name("Test Plan")
                 .coverageAmount(100000.0)
                 .monthlyCost(250.0)
-                .benefits(List.of("Benefit A", "Benefit B"))
-                .build();
-    }
-
-    static InsuranceModel getInsuranceModel(UUID id, String name, double coverageAmount, double monthlyCost) {
-        return InsuranceModel.builder()
-                .id(id)
-                .name(name)
-                .coverageAmount(coverageAmount)
-                .monthlyCost(monthlyCost)
                 .benefits(List.of("Benefit A", "Benefit B"))
                 .build();
     }
