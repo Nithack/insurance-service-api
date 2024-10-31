@@ -1,0 +1,36 @@
+
+spring:
+  application:
+    name: insurance-service-api
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: ${POSTGRES_DB_URL}
+    username: ${POSTGRES_DB_USERNAME}
+    password: ${POSTGRES_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+# Feign
+feign:
+  max-attempts: 3
+  max-period-between-attempts: 3
+  period: 100
+client:
+  service:
+    url: http://localhost:3333
+# swagger
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  show-actuator: true
+  api-docs:
+    enabled: true
+    path: /api-docs
+# logging
+logging:
+  level:
+    root: INFO
+server:
+  port: ${APP_PORT}

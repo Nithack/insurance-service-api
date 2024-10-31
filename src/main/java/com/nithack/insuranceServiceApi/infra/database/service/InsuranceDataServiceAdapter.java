@@ -14,10 +14,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-/**
- * Adapter para operações de persistência de dados de seguros,
- * implementando lógica de mapeamento e acesso ao banco de dados.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -39,11 +35,6 @@ public class InsuranceDataServiceAdapter implements InsuranceDataServicePort {
         }
     }
 
-    /**
-     * Retorna todos os seguros cadastrados, convertendo-os para Insurance.
-     *
-     * @return lista de Insurance.
-     */
     public List<InsuranceEntity> findAll() {
         log.info("[findAll] Retrieving all insurances from database");
         try {
@@ -66,12 +57,6 @@ public class InsuranceDataServiceAdapter implements InsuranceDataServicePort {
         }
     }
 
-    /**
-     * Busca um seguro pelo ID, retornando-o como Insurance.
-     *
-     * @param insuranceId UUID do seguro.
-     * @return Optional com Insurance, ou vazio se não encontrado.
-     */
     public Optional<InsuranceEntity> findById(UUID insuranceId) {
         log.info("[findById] Retrieving insurance with id: {}", insuranceId);
         try {
@@ -88,12 +73,6 @@ public class InsuranceDataServiceAdapter implements InsuranceDataServicePort {
         }
     }
 
-    /**
-     * Salva ou atualiza um seguro, mapeando de Insurance para InsuranceModel.
-     *
-     * @param insurance o seguro a ser salvo.
-     * @return Insurance salvo.
-     */
     public InsuranceEntity save(InsuranceEntity insurance) {
         log.info("[save] Saving insurance with id: {}", insurance.getId());
         try {
@@ -112,12 +91,6 @@ public class InsuranceDataServiceAdapter implements InsuranceDataServicePort {
         }
     }
 
-    /**
-     * Verifica se um seguro existe pelo ID.
-     *
-     * @param insuranceId UUID do seguro.
-     * @return true se o seguro existir, false caso contrário.
-     */
     public boolean existsById(UUID insuranceId) {
         log.info("[existsById] Checking if insurance exists with id: {}", insuranceId);
         try {

@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @RequiredArgsConstructor
-
 public class FeignClientConfig {
 
     private final FeignProperties feignProperties;

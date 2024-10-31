@@ -11,10 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Adapter for insurance management operations,
- * implementing validation logic and database access.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor

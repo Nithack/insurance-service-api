@@ -2,11 +2,18 @@ package com.nithack.insuranceServiceApi.application.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
 @Data
+@Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class RequestClientInsuranceDTO {
     @NotNull(message = "O ID do seguro é obrigatório")
     private UUID insuranceId;
