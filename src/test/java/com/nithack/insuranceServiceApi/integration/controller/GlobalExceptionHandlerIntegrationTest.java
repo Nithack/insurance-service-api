@@ -1,6 +1,7 @@
 package com.nithack.insuranceServiceApi.integration.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nithack.insuranceServiceApi.TestcontainersConfiguration;
 import com.nithack.insuranceServiceApi.application.dto.ClientDTO;
 import com.nithack.insuranceServiceApi.application.dto.RequestClientInsuranceDTO;
 import com.nithack.insuranceServiceApi.application.exception.ClientNotFoundException;
@@ -26,7 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.testcontainers.utility.TestcontainersConfiguration;
 
 import java.util.Optional;
 import java.util.UUID;

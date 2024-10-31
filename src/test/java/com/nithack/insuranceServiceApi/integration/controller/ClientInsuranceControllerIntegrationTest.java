@@ -6,6 +6,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.noContent;
 import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
+import com.nithack.insuranceServiceApi.TestcontainersConfiguration;
 import com.nithack.insuranceServiceApi.application.dto.ClientDTO;
 import com.nithack.insuranceServiceApi.application.dto.RequestClientInsuranceDTO;
 import com.nithack.insuranceServiceApi.domain.enums.InsuranceStatus;
@@ -26,7 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.testcontainers.utility.TestcontainersConfiguration;
 import org.wiremock.spring.ConfigureWireMock;
 import org.wiremock.spring.EnableWireMock;
 
